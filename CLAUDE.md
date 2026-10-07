@@ -10,15 +10,17 @@ Tema por defecto `bellodev`; tema de administración `claro`. Único módulo con
 
 ## Repositorios git (leer antes de cualquier commit)
 
-**La raíz del proyecto NO es un repositorio git.** Hay tres repos independientes, cada uno con su
-propio remoto en GitHub (`dragonenlacima/*`):
+**Un solo repositorio git en la raíz del proyecto** (rama `main`). Contiene los dos módulos custom,
+el tema `bellodev`, `composer.json`/`composer.lock` y los archivos base de `web/`. Los antiguos
+repos independientes de `audiencias`, `create_public_official` y `bellodev` (`dragonenlacima/*`)
+quedaron como archivo histórico y **no** deben volver a crearse `.git` dentro de subdirectorios.
 
-- `web/modules/custom/audiencias`
-- `web/modules/custom/create_public_official`
-- `web/themes/custom/bellodev`
+El `.gitignore` de la raíz deja fuera, a propósito:
 
-Cualquier operación git debe ejecutarse dentro de esos directorios (`git -C <dir> …`). `vendor/`,
-`web/core/` y `web/sites/default/files/` no están versionados aquí.
+- `vendor/`, `web/core/`, `web/modules/contrib/` y `node_modules/` (se reconstruyen con Composer/npm).
+- `web/sites/*/files/` y `settings.php` (credenciales propias de cada entorno).
+- `web/modules/custom/create_public_official/data.php`: padrón con cédulas. **Nunca** versionarlo
+  ni otros archivos con datos personales (Ley 1581 de 2012).
 
 ## Comandos
 
@@ -39,9 +41,8 @@ npm run dev      # vite build --watch
 npm run build    # producción; después siempre `drush cr`
 ```
 
-`assets/dist/` está en `.gitignore` y **no** está versionado: tras un clon del tema hay que
-`npm install && npm run build` o el sitio queda sin CSS ni JS. El tema tiene además un submódulo
-(`assets/src/js/modules/detect-resolution`) que requiere `git submodule update --init`.
+`assets/dist/` está en el `.gitignore` del tema y **no** está versionado: tras un clon hay que
+`npm install && npm run build` o el sitio queda sin CSS ni JS.
 
 **No hay suite de pruebas.** `composer.json` no declara `require-dev`; no hay PHPUnit, PHPCS ni
 PHPStan instalados. No inventes comandos de test ni de lint: la verificación es manual (`drush cr`

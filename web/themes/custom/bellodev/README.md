@@ -247,24 +247,6 @@ Funcionalidades incluidas:
 - **Menú móvil interactivo**: Acordeón para submenús
 - **Toggle de búsqueda**: Apertura/cierre del formulario de búsqueda
 - **Menú hamburguesa**: Control del menú móvil
-- **Módulo detect-resolution**: Detección de breakpoints (comentado por defecto)
-
-### Detect Resolution (opcional)
-
-Módulo para detectar cambios en breakpoints responsivos. Ver documentación completa en:
-`assets/src/js/modules/detect-resolution/README.md`
-
-Ejemplo de uso:
-```javascript
-import { watchBreakpoints, createBreakpointActions } from './modules/detect-resolution/detect-resolution.js';
-
-const actions = createBreakpointActions({
-    mobile: () => console.log('📱 Modo móvil'),
-    lg: () => console.log('🖥️ Modo desktop')
-});
-
-const unwatch = watchBreakpoints(actions);
-```
 
 ## 🌐 Vite Configuration
 
