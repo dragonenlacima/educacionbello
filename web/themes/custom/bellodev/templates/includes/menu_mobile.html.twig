@@ -1,0 +1,54 @@
+<nav id="menu-mobile" class="menu-mobile bg-white-smoke-600 overflow-y-auto lg:hidden">
+{% include active_theme_path() ~ '/templates/includes/bar-top.html.twig' %}
+<div class="text-right p-1">
+    <button id="menu-mobile-close" class="menu-mobile__close hover:text-cobalt-500 focus:outline-none cursor-pointer" aria-label="Close Menu">
+      <img src="/{{ active_theme_path() }}/assets/dist/images/times.svg" alt="Cerrar menú" width="42" class="inline-block">
+    </button>
+</div>
+  {% if menu_mobile %}
+    <ul class="menu-mobile__list">
+      {% for item in menu_mobile %}
+        <li class="menu-mobile__item{{ item.in_active_trail ? ' menu-mobile__item--active-trail' : '' }}{{ item.has_children ? ' menu-mobile__item--has-children' : '' }}">
+          {% if item.url is not empty %}
+            <a href="{{ item.url }}" class="menu-mobile__link{{ item.in_active_trail ? ' menu-mobile__link--active-trail' : '' }}">
+              {{ item.title }}
+              {% if item.has_children %}
+                <span class="menu-mobile__arrow">▼</span>
+              {% endif %}
+            </a>
+          {% else %}
+            <span class="menu-mobile__link{{ item.in_active_trail ? ' menu-mobile__link--active-trail' : '' }}">
+              {{ item.title }}
+              {% if item.has_children %}
+                <span class="menu-mobile__arrow">▼</span>
+              {% endif %}
+            </span>
+          {% endif %}
+
+          {% if item.below %}
+
+            <ul class="menu-mobile__submenu">
+            <hr>
+              {% for subitem in item.below %}
+
+                <li class="menu-mobile__subitem{{ subitem.in_active_trail ? ' menu-mobile__subitem--active-trail' : '' }}">
+                  {% if subitem.url is not empty %}
+                    <a href="{{ subitem.url }}" class="menu-mobile__sublink{{ subitem.in_active_trail ? ' menu-mobile__sublink--active-trail' : '' }}">
+                      {{ subitem.title }}
+                    </a>
+                  {% else %}
+                    <span class="menu-mobile__sublink{{ subitem.in_active_trail ? ' menu-mobile__sublink--active-trail' : '' }}">
+                      {{ subitem.title }}
+                    </span>
+                  {% endif %}
+                </li>
+
+              {% endfor %}
+              <hr>
+            </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</nav>

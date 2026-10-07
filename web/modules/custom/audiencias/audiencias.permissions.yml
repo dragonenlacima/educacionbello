@@ -1,0 +1,4 @@
+administrar vacantes:
+  title: 'Administrar vacantes'
+  description: 'Permite crear, editar, eliminar y asignar vacantes administrativas.'
+  restrict access: true

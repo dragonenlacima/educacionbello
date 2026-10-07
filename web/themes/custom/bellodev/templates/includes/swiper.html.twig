@@ -1,0 +1,31 @@
+{{ attach_library('bellodev/swiperjs') }}
+{{ {'#cache': {'tags': ['config:custom_dynamic_fields.settings']}}|render }}
+
+{% if slides_swiper is not empty %}
+	<div class="swiper">
+		<div class="swiper-wrapper">
+			{% for slide in slides_swiper %}
+      {% if slide.enable %}
+				<div class="swiper-slide">
+					{% if slide.link is not empty %}
+						<a href="{{ slide.link }}" title="{{ slide.alt_text|default('Slide image') }}" style="display: block; width: 100%; height: auto;" class="cursor-pointer">
+						{% endif %}
+						<img src="{{ slide.image_url }}"
+						     alt="{{ slide.alt_text|default('Slide image') }}"
+						     style="{% if slide.opacity is defined %}opacity: {{ slide.opacity / 100 }};{% endif %}">
+						{% if slide.link is not empty %}
+						</a>
+					{% endif %}
+				</div>
+      {% endif %}
+			{% endfor %}
+		</div>
+		<div class="swiper-pagination-wrapper">
+			<a id="swiper-stop-play" class="swiper-stop-play cursor-pointer">|| Detener</a>
+			<div class="swiper-pagination"></div>
+		</div>
+		<!-- If we need navigation buttons -->
+		<div class="swiper-button-prev cursor-pointer"></div>
+		<div class="swiper-button-next cursor-pointer"></div>
+	</div>
+{% endif %}

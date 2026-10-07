@@ -1,0 +1,247 @@
+<?php
+
+/**
+ * @file
+ * Funciones de instalación y definición del esquema del módulo Audiencias.
+ *
+ * Define las cuatro tablas crudas del módulo mediante hook_schema(): no se
+ * usan entidades de contenido ni Field API. Todas las tablas llevan el
+ * prefijo «audiencias_».
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Declara las cuatro tablas que dan soporte a la gestión de vacantes:
+ * instituciones, cargos, funcionarios y vacantes, junto con sus llaves
+ * primarias, llaves únicas, índices y metadatos de llaves foráneas.
+ */
+function audiencias_schema() {
+  $schema = [];
+
+  // Tabla de instituciones del municipio.
+  $schema['audiencias_institucion'] = [
+    'description' => 'Instituciones del municipio de Bello donde se ubican las vacantes.',
+    'fields' => [
+      'institucion_id' => [
+        'description' => 'Identificador único de la institución (autoincremental).',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nombre' => [
+        'description' => 'Nombre de la institución. Obligatorio y único.',
+        'type' => 'varchar',
+        'length' => 120,
+        'not null' => TRUE,
+      ],
+      'ubicacion' => [
+        'description' => 'Ubicación física de la institución. Campo opcional.',
+        'type' => 'varchar',
+        'length' => 200,
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['institucion_id'],
+    // El nombre de la institución no puede repetirse.
+    'unique keys' => [
+      'nombre' => ['nombre'],
+    ],
+  ];
+
+  // Tabla de cargos administrativos.
+  $schema['audiencias_cargo'] = [
+    'description' => 'Cargos administrativos a los que se asocian funcionarios y vacantes.',
+    'fields' => [
+      'cargo_id' => [
+        'description' => 'Identificador único del cargo (autoincremental).',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nombre' => [
+        'description' => 'Nombre del cargo. Obligatorio.',
+        'type' => 'varchar',
+        'length' => 120,
+        'not null' => TRUE,
+      ],
+      'estado' => [
+        'description' => 'Estado del cargo: 1 = activo, 0 = inactivo.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ],
+    ],
+    'primary key' => ['cargo_id'],
+  ];
+
+  // Tabla de funcionarios.
+  $schema['audiencias_funcionario'] = [
+    'description' => 'Funcionarios candidatos a ocupar vacantes administrativas.',
+    'fields' => [
+      'funcionario_id' => [
+        'description' => 'Identificador único del funcionario (autoincremental).',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nombre' => [
+        'description' => 'Nombre completo del funcionario. Obligatorio.',
+        'type' => 'varchar',
+        'length' => 120,
+        'not null' => TRUE,
+      ],
+      'documento' => [
+        'description' => 'Cédula de ciudadanía del funcionario. Obligatoria y única.',
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ],
+      'posicion' => [
+        'description' => 'Posición del funcionario. Única dentro de cada cargo.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'cargo_id' => [
+        'description' => 'Cargo del funcionario. FK → audiencias_cargo.cargo_id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['funcionario_id'],
+    'unique keys' => [
+      // La cédula es única a nivel global.
+      'documento' => ['documento'],
+      // La combinación (cargo_id, posicion) no puede repetirse. Al usar
+      // cargo_id como columna líder, esta llave también indexa cargo_id, por
+      // lo que NO se declara un índice independiente para esa columna.
+      'cargo_posicion' => ['cargo_id', 'posicion'],
+    ],
+    'foreign keys' => [
+      'cargo_funcionario' => [
+        'table' => 'audiencias_cargo',
+        'columns' => ['cargo_id' => 'cargo_id'],
+      ],
+    ],
+  ];
+
+  // Tabla de vacantes.
+  $schema['audiencias_vacante'] = [
+    'description' => 'Vacantes administrativas; el funcionario se asigna en un paso posterior.',
+    'fields' => [
+      'vacante_id' => [
+        'description' => 'Identificador único de la vacante (autoincremental).',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nombre' => [
+        'description' => 'Nombre de la vacante. Obligatorio.',
+        'type' => 'varchar',
+        'length' => 120,
+        'not null' => TRUE,
+      ],
+      'estado' => [
+        'description' => 'Estado de la vacante: 1 = activa, 0 = inactiva.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ],
+      'institucion_id' => [
+        'description' => 'Institución de la vacante. FK → audiencias_institucion.institucion_id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'cargo_id' => [
+        'description' => 'Cargo requerido por la vacante. FK → audiencias_cargo.cargo_id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'funcionario_id' => [
+        'description' => 'Funcionario asignado. NULL al crear; se llena al asignar. Único.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        // Nullable y sin valor por defecto: la asignación es un paso aparte.
+        'not null' => FALSE,
+      ],
+      'tipo_vacante' => [
+        'description' => 'Tipo de vacante: Ascenso o Abierto.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => 'Ascenso',
+      ],
+      'denominacion' => [
+        'description' => 'Método de asignación: audiencia o sorteo; NULL si está sin asignar.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+      ],
+    ],
+    'primary key' => ['vacante_id'],
+    'unique keys' => [
+      // Un funcionario solo puede ocupar una vacante (relación uno a uno).
+      'funcionario_id' => ['funcionario_id'],
+    ],
+    'indexes' => [
+      'institucion_id' => ['institucion_id'],
+      'cargo_id' => ['cargo_id'],
+    ],
+    'foreign keys' => [
+      'institucion_vacante' => [
+        'table' => 'audiencias_institucion',
+        'columns' => ['institucion_id' => 'institucion_id'],
+      ],
+      'cargo_vacante' => [
+        'table' => 'audiencias_cargo',
+        'columns' => ['cargo_id' => 'cargo_id'],
+      ],
+      'funcionario_vacante' => [
+        'table' => 'audiencias_funcionario',
+        'columns' => ['funcionario_id' => 'funcionario_id'],
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Agrega los campos «tipo_vacante» y «denominacion» a audiencias_vacante.
+ *
+ * Cambio de esquema NO destructivo sobre datos en producción: añade las dos
+ * columnas si aún no existen (idempotente). «tipo_vacante» entra con default
+ * «Ascenso», por lo que las vacantes existentes quedan con ese valor;
+ * «denominacion» es NULL (sin asignar).
+ */
+function audiencias_update_9001() {
+  $schema = \Drupal::database()->schema();
+
+  // Tipo de vacante: Ascenso (por defecto) o Abierto.
+  if (!$schema->fieldExists('audiencias_vacante', 'tipo_vacante')) {
+    $schema->addField('audiencias_vacante', 'tipo_vacante', [
+      'type' => 'varchar',
+      'length' => 32,
+      'not null' => TRUE,
+      'default' => 'Ascenso',
+      'description' => 'Tipo de vacante: Ascenso o Abierto',
+    ]);
+  }
+
+  // Denominación: método de asignación (audiencia/sorteo); NULL si sin asignar.
+  if (!$schema->fieldExists('audiencias_vacante', 'denominacion')) {
+    $schema->addField('audiencias_vacante', 'denominacion', [
+      'type' => 'varchar',
+      'length' => 32,
+      'not null' => FALSE,
+      'description' => 'Método de asignación: audiencia o sorteo; NULL si está sin asignar',
+    ]);
+  }
+
+  return (string) t('Campos «tipo_vacante» y «denominacion» verificados en audiencias_vacante.');
+}

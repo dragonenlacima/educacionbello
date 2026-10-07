@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Create Public Official module.
+ */
+
+function create_public_official_schema() {
+  $schema['create_public_official_list'] = [
+    'description' => 'Stores information about public officials.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'nid' => [
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ],
+      'position' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'dependency' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'gender' => [
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+      ],
+      'typical' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'updated' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ]
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['create_public_official_register_attendance'] = [
+    'description' => 'Stores attendance records for public officials.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'official_id' => [
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ],
+      'attendance_date' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'typical' => [
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'id_user_register' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'user_register' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ],
+      'updated' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ]
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['create_public_official_attendance_data'] = [
+    'description' => 'Stores detailed attendance data for public officials.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'id_register' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'nid' => [
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => TRUE,
+      ],
+      'gender' => [
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+      ],
+      'position' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'dependency' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'updated' => [
+        'type' => 'int',
+        'not null' => TRUE,
+      ]
+    ],
+    'primary key' => ['id'],
+    'foreign keys' => [
+      'id_register_fk' => [
+        'table' => 'create_public_official_register_attendance',
+        'columns' => ['id_register' => 'id'],
+      ],
+    ],
+    'unique keys' => [
+      'id_register_unique' => ['id_register'],
+    ],
+  ];
+  return $schema;
+}
+
+function create_public_official_install() {
+  $users = list_users();
+  $database = \Drupal::database();
+  foreach ($users as $user) {
+    $database->insert('create_public_official_list')
+      ->fields($user)
+      ->execute();
+  }
+}
+
+function list_users() {
+  include __DIR__ . '/data.php';
+  return $users;
+}

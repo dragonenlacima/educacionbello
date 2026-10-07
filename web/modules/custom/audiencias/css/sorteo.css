@@ -1,0 +1,96 @@
+/**
+ * @file
+ * Estilos del preload del sorteo: overlay a pantalla completa con tarjeta,
+ * spinner y barra de progreso que se anima de 0 % a 100 % en 5 s, además de la
+ * utilidad para ocultar el resultado hasta que el preload lo revele.
+ */
+
+/* Oculta el resultado (y el propio overlay) hasta que el JS lo muestre. */
+.is-hidden {
+  display: none;
+}
+
+/* El overlay declara «display: flex» con la misma especificidad que «.is-hidden»
+   y, al ir después en el archivo, ganaba la cascada: el overlay no se ocultaba.
+   Esta regla (dos clases) tiene mayor especificidad y siempre prevalece. */
+.audiencias-sorteo-overlay.is-hidden {
+  display: none;
+}
+
+/* Overlay fijo que cubre la pantalla y BLOQUEA la interacción (evita doble
+   clic mientras se realiza el sorteo). */
+.audiencias-sorteo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+/* Tarjeta centrada con el mensaje y la barra. */
+.audiencias-sorteo-overlay__tarjeta {
+  width: 320px;
+  max-width: 90vw;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+/* Spinner giratorio (acento verde del módulo). */
+.audiencias-sorteo-overlay__spinner {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 1rem;
+  border: 4px solid #e5e7eb;
+  border-top-color: #1a7f37;
+  border-radius: 50%;
+  animation: audiencias-sorteo-girar 0.9s linear infinite;
+}
+
+.audiencias-sorteo-overlay__texto {
+  margin: 0 0 1rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+/* Pista (fondo) de la barra de progreso. */
+.audiencias-sorteo-overlay__pista {
+  height: 10px;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+
+/* Relleno de la barra. Sin animación por defecto; arranca de 0 %. */
+.audiencias-sorteo-overlay__barra {
+  width: 0;
+  height: 100%;
+  background: #1a7f37;
+  border-radius: 999px;
+}
+
+/* Al activar «is-animando» la barra va de 0 % a 100 % en 5 s y se queda llena.
+   El JS reinicia esta animación (quita/repone la clase) en cada apertura. */
+.audiencias-sorteo-overlay__barra.is-animando {
+  animation: audiencias-sorteo-progreso 5s linear forwards;
+}
+
+@keyframes audiencias-sorteo-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes audiencias-sorteo-progreso {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

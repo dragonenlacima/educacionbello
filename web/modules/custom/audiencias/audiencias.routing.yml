@@ -1,0 +1,235 @@
+# Rutas del módulo Audiencias.
+# En la Fase 2 solo se declaran las rutas cuyo destino ya existe: la página
+# resumen y los cuatro listados. Todas exigen el permiso «administrar vacantes».
+
+audiencias.admin_overview:
+  path: '/admin/audiencias'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AudienciasController::overview'
+    _title: 'Audiencias'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.institucion.list:
+  path: '/admin/audiencias/institucion'
+  defaults:
+    _form: 'Drupal\audiencias\Form\InstitucionEliminacionMasivaForm'
+    _title: 'Instituciones'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.institucion.exportar:
+  path: '/admin/audiencias/institucion/exportar'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AudienciasController::exportarInstituciones'
+    _title: 'Exportar instituciones'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.cargo.list:
+  path: '/admin/audiencias/cargo'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AudienciasController::listarCargos'
+    _title: 'Cargos'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.funcionario.list:
+  path: '/admin/audiencias/funcionario'
+  defaults:
+    _form: 'Drupal\audiencias\Form\FuncionarioEliminacionMasivaForm'
+    _title: 'Funcionarios'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.vacante.list:
+  path: '/admin/audiencias/vacante'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteReversaMasivaForm'
+    _title: 'Vacantes'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.vacante.exportar:
+  path: '/admin/audiencias/vacante/exportar'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AudienciasController::exportarVacantes'
+    _title: 'Exportar vacantes'
+  requirements:
+    _permission: 'administrar vacantes'
+
+# Eliminación masiva de vacantes (pestaña aparte del listado/reversa). Ruta
+# estática: no choca con /vacante/{id}/... porque {id} exige \d+.
+audiencias.vacante.eliminar_masivo:
+  path: '/admin/audiencias/vacante/eliminar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteEliminacionMasivaForm'
+    _title: 'Eliminar vacantes'
+  requirements:
+    _permission: 'administrar vacantes'
+
+# ---------------------------------------------------------------------------
+# Fase 3: rutas de alta, edición y borrado por entidad. Todas exigen el
+# permiso «administrar vacantes».
+# ---------------------------------------------------------------------------
+
+# Institución.
+audiencias.institucion.add:
+  path: '/admin/audiencias/institucion/agregar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\InstitucionForm'
+    _title: 'Agregar institución'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.institucion.edit:
+  path: '/admin/audiencias/institucion/{id}/editar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\InstitucionForm'
+    _title: 'Editar institución'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+audiencias.institucion.delete:
+  path: '/admin/audiencias/institucion/{id}/borrar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\InstitucionDeleteForm'
+    _title: 'Eliminar institución'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+# Cargo.
+audiencias.cargo.add:
+  path: '/admin/audiencias/cargo/agregar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\CargoForm'
+    _title: 'Agregar cargo'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.cargo.edit:
+  path: '/admin/audiencias/cargo/{id}/editar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\CargoForm'
+    _title: 'Editar cargo'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+audiencias.cargo.delete:
+  path: '/admin/audiencias/cargo/{id}/borrar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\CargoDeleteForm'
+    _title: 'Eliminar cargo'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+# Funcionario.
+audiencias.funcionario.add:
+  path: '/admin/audiencias/funcionario/agregar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\FuncionarioForm'
+    _title: 'Agregar funcionario'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.funcionario.edit:
+  path: '/admin/audiencias/funcionario/{id}/editar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\FuncionarioForm'
+    _title: 'Editar funcionario'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+audiencias.funcionario.delete:
+  path: '/admin/audiencias/funcionario/{id}/borrar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\FuncionarioDeleteForm'
+    _title: 'Eliminar funcionario'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+# Vacante.
+audiencias.vacante.add:
+  path: '/admin/audiencias/vacante/agregar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteForm'
+    _title: 'Agregar vacante'
+  requirements:
+    _permission: 'administrar vacantes'
+
+audiencias.vacante.edit:
+  path: '/admin/audiencias/vacante/{id}/editar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteForm'
+    _title: 'Editar vacante'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+audiencias.vacante.delete:
+  path: '/admin/audiencias/vacante/{id}/borrar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteDeleteForm'
+    _title: 'Eliminar vacante'
+  requirements:
+    _permission: 'administrar vacantes'
+    id: \d+
+
+# ---------------------------------------------------------------------------
+# Fase 4: asignación de funcionario a una vacante (segundo paso del flujo).
+# ---------------------------------------------------------------------------
+audiencias.vacante.asignar:
+  path: '/admin/audiencias/vacante/{vacante_id}/asignar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteAsignarForm'
+    _title: 'Asignar funcionario'
+  requirements:
+    _permission: 'administrar vacantes'
+    vacante_id: \d+
+
+# Reversa de la asignación: deja la vacante «Sin asignar».
+audiencias.vacante.desasignar:
+  path: '/admin/audiencias/vacante/{vacante_id}/desasignar'
+  defaults:
+    _form: 'Drupal\audiencias\Form\VacanteDesasignarForm'
+    _title: 'Reversar asignación'
+  requirements:
+    _permission: 'administrar vacantes'
+    vacante_id: \d+
+
+# ---------------------------------------------------------------------------
+# Pantalla de asignación parametrizada por cargo (tablero + herramienta).
+# ---------------------------------------------------------------------------
+audiencias.asignacion:
+  path: '/admin/audiencias/asignacion/{cargo_id}'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AsignacionController::pantalla'
+    _title: 'Asignación'
+  requirements:
+    _permission: 'administrar vacantes'
+    cargo_id: \d+
+
+# Exportación a Excel del listado de funcionarios por estado.
+audiencias.asignacion.exportar:
+  path: '/admin/audiencias/asignacion/{cargo_id}/exportar'
+  defaults:
+    _controller: 'Drupal\audiencias\Controller\AsignacionController::exportar'
+  requirements:
+    _permission: 'administrar vacantes'
+    cargo_id: \d+
+
+# Sorteo aleatorio de vacantes para los funcionarios pendientes del cargo.
+audiencias.asignacion.sorteo:
+  path: '/admin/audiencias/asignacion/{cargo_id}/sorteo'
+  defaults:
+    _form: 'Drupal\audiencias\Form\SorteoVacantesForm'
+    _title: 'Sorteo de vacantes'
+  requirements:
+    _permission: 'administrar vacantes'
+    cargo_id: \d+

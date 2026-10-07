@@ -1,0 +1,73 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a menu.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link URL, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ *
+ * @ingroup themeable
+ */
+#}
+{% import _self as menus %}
+
+{#
+  We call a macro which calls itself to render the full tree.
+  https://twig.symfony.com/doc/3.x/tags/macro.html
+#}
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass('flex') }}>
+    {% else %}
+      <ul class="desktop absolute hidden bg-white-smoke-500 max-w-60 w-full">
+    {% endif %}
+    {% for item in items %}
+      <li{{ item.attributes.addClass(item.in_active_trail ? 'menu-item--active-trail', item.below ? 'block': 'flex', 'max-w-60', 'z-10') }}>
+        {% if item.below %}
+          {%
+            set link_classes = [
+              'flex',
+              'items-center',
+              'gap-1',
+              item.in_active_trail ? 'in-active-trail',
+              item.url.isRouted and item.url.routeName == '<current>' ? 'is-active',
+              'px-5',
+              'py-3',
+              'w-full',
+              'h-full',
+              'has-children',
+              '!no-underline',
+            ]
+          %}
+          <a href="{{ item.url }}" class="{{ link_classes|join(' ')|trim }}">
+            <span class="line-clamp-2 flex-1 text-sm">{{ item.title }}</span>
+            <span class="menu-arrow flex-shrink-0">▼</span>
+          </a>
+        {% else %}
+          <a href="{{ item.url }}" class="px-5 !no-underline py-3 w-full flex items-center h-full {{ item.in_active_trail ? 'in-active-trail' }} {{ item.url.isRouted and item.url.routeName == '<current>' ? 'is-active' }}">
+            <span class="line-clamp-2 text-sm">{{ item.title }}</span>
+          </a>
+        {% endif %}
+        {% if item.below %}
+          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

@@ -1,0 +1,9 @@
+'Validar Funcionario':
+  title: 'Validar Funcionario'
+  description: 'Permite validar funcionarios públicos.'
+'Ver lista de asistentes':
+  title: 'Ver lista de asistentes'
+  description: 'Permite ver la lista de funcionarios públicos que han registrado su asistencia.'
+'Descargar asistencia':
+  title: 'Descargar lista de asistentes'
+  description: 'Permite descargar la lista de funcionarios públicos que han registrado su asistencia en formato XLSX.'

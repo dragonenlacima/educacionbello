@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for an 'input' #type form element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the input element.
+ * - children: Optional additional rendered elements.
+ *
+ * @see \Drupal\Core\Form\FormPreprocess::preprocessInput()
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="w-full my-4">
+	<label class="flex items-center justify-between gap-4 bg-white border border-gray-300 rounded-lg cursor-pointer group hover:border-blue-500 transition-colors">
+		<div class="flex items-center gap-2 flex-1 min-w-0">
+			<span class="text-sm whitespace-nowrap p-2 bg-cobalt-500 rounded-l-lg text-white">Seleccionar archivo</span>
+			<input{{attributes.addClass('blockw-full','text-sm','text-gray-500','file:hidden','cursor-pointer','focus:outline-none','bg-transparent','border-none','p-0','rounded-l')}}/>
+		</div>
+	</label>
+	{{ children }}
+</div>

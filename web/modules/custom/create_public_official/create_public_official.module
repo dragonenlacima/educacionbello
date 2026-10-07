@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Create Public Official module.
+ */
+/* function create_public_official_preprocess_page ($variables) {
+  $service = \Drupal::service('create_public_official.users');
+} */

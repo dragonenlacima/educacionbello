@@ -1,0 +1,24 @@
+# Librerías de activos del módulo Audiencias.
+
+# Estilos de la pantalla de asignación (filtros tipo «pill»).
+asignacion:
+  css:
+    theme:
+      css/asignacion.css: {}
+
+# Preload del sorteo: overlay animado (≥5 s) y revelado del resultado por AJAX.
+sorteo:
+  css:
+    theme:
+      css/sorteo.css: {}
+  js:
+    js/sorteo.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Recarga la pantalla del sorteo si el navegador la restaura desde bfcache.
+sorteo_no_bfcache:
+  version: 1.x
+  js:
+    js/sorteo-no-bfcache.js: {}

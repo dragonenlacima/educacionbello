@@ -1,0 +1,35 @@
+name: bellodev
+type: theme
+description: 'Tema con Vite y Tailwind CSS 4.x'
+core_version_requirement: ^10 || ^11
+base theme: false
+
+libraries:
+  - bellodev/global
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  featured: 'Featured'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: 'Footer'
+  messages: 'Messages'
+
+libraries-override:
+  system/base:
+    css:
+      component:
+        css/components/hidden.module.css: false
+        css/components/align.module.css: false
+        css/components/clearfix.module.css: false
+        css/components/container-inline.module.css: false
+        css/components/item-list.module.css: false
+        css/components/js.module.css: false
+        css/components/position-container.module.css: false
+        css/components/reset-appearance.module.css: false

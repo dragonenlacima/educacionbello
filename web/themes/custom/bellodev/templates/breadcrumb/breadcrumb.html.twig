@@ -1,0 +1,19 @@
+{% if breadcrumb %}
+  <nav role="navigation" aria-labelledby="system-breadcrumb" class="container mx-auto px-4 py-3 lg:px-4">
+    <h2 id="system-breadcrumb" class="visually-hidden">{{ 'Breadcrumb'|t }}</h2>
+    <ol class="container mx-auto flex flex-wrap items-center gap-2 text-sm">
+    {% for item in breadcrumb %}
+      <li class="flex items-center gap-2">
+        {% if item.url %}
+          <a href="{{ item.url }}" class="text-cobalt-500 hover:underline">{{ item.text }}</a>
+        {% else %}
+          <span class="text-matterhorn-500 font-medium">{{ item.text }}</span>
+        {% endif %}
+        {% if not loop.last %}
+          <span class="text-cobalt-500">></span>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ol>
+  </nav>
+{% endif %}

@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a link to a file.
+ *
+ * Available variables:
+ * - attributes: The HTML attributes for the containing element.
+ * - link: A link to the file.
+ * - file_size: The size of the file.
+ *
+ * @see \Drupal\file\Hook\FileThemeHooks::preprocessFileLink()
+ *
+ * @ingroup themeablei
+ */
+#}
+<div class="flex items-center gap-2 bg-cobalt-500 px-2 py-2 rounded w-full">
+	<div class="flex-shrink-0">
+		<svg width="32" height="32" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M20 2H8C6.9 2 6.01 2.9 6.01 4L6 28C6 29.1 6.89 30 7.99 30H24C25.1 30 26 29.1 26 28V10L20 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M20 2V10H26" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M10 17H22" stroke="white" stroke-width="2" stroke-linecap="round"/>
+			<path d="M10 22H22" stroke="white" stroke-width="2" stroke-linecap="round"/>
+		</svg>
+	</div>
+	<div class="[&_a]:text-white [&_a]:hover:text-gray-200">
+		<span class="text-[0.9rem] text-white">{{ link }}</span>
+		{% if file_size %}
+			<span class="text-[0.9rem] text-white">({{ file_size }})</span>
+		{% endif %}
+	</div>
+</div>

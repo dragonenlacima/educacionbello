@@ -1,0 +1,31 @@
+create_public_official.validate_user:
+  path: '/funcionario/validar'
+  defaults:
+    _title: 'Validar Funcionario'
+    _form: 'Drupal\create_public_official\Form\ValidateUserForm'
+  requirements:
+    _permission: 'Validar Funcionario'
+
+create_public_official.list_official:
+  path: '/funcionario/listar'
+  defaults:
+    _title: 'Lista de asistentes'
+    _controller: 'Drupal\create_public_official\Controller\ListOfficialController'
+  requirements:
+    _permission: 'Ver lista de asistentes'
+
+create_public_official.download_official:
+  path: '/funcionario/descargar'
+  defaults:
+    _title: 'Descargar asistencia'
+    _controller: '\Drupal\create_public_official\Controller\DownloadOfficialController'
+  requirements:
+    _permission: 'Descargar asistencia'
+
+create_public_official.view_excel:
+  path: '/funcionario/ver-excel'
+  defaults:
+    _title: 'Ver Excel'
+    _controller: '\Drupal\create_public_official\Controller\ViewExcel'
+  requirements:
+    _permission: 'Descargar asistencia'

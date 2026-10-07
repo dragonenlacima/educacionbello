@@ -1,0 +1,18 @@
+create_public_official.validate_user:
+  title: 'Registrar asistencia'
+  description: 'Registrar asistencia de funcionarios al evento'
+  route_name: create_public_official.validate_user
+  menu_name: main
+  weight: 10
+create_public_official.list_official:
+  title: 'Lista de asistentes'
+  description: 'Asistentes'
+  route_name: create_public_official.list_official
+  menu_name: main
+  weight: 20
+create_public_official.download_official:
+  title: 'Descargar asistencia'
+  description: 'Descargar asistencia en formato Excel'
+  route_name: create_public_official.download_official
+  menu_name: main
+  weight: 30

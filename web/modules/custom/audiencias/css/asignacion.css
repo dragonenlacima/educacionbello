@@ -1,0 +1,228 @@
+/**
+ * @file
+ * Estilos de la pantalla de asignación del módulo Audiencias.
+ *
+ * Presenta los enlaces de «Filtrar por estado» como un grupo de botones tipo
+ * «pill» (pestañas redondeadas) en línea, con el filtro activo resaltado.
+ */
+
+/* Contenedor de los filtros: en línea, con separación y ajuste en pantallas
+   angostas. Sin viñetas. */
+.audiencias-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* Botón base de filtro (pestaña redondeada). */
+.audiencias-filtro {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  background: transparent;
+  color: #0073bb;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+/* Estado hover de los filtros no activos: tinte azul muy claro. */
+.audiencias-filtro:hover,
+.audiencias-filtro:focus {
+  background: #e6f2fb;
+  border-color: #0073bb;
+  color: #0073bb;
+}
+
+/* Filtro activo: azul de acento, texto blanco. */
+.audiencias-filtro.is-active {
+  background: #0073bb;
+  border-color: #0073bb;
+  color: #fff;
+}
+
+/* =========================================================================
+   Barra de progreso del tablero de asignación.
+   Pista suave redondeada con relleno de acento (verde) y porcentaje legible.
+   ========================================================================= */
+
+/* Pista de la barra: fondo tenue, bordes redondeados y altura cómoda. */
+.audiencias-progreso {
+  height: 22px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0.25rem 0 0;
+  background: #eef1f4;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Relleno de avance: verde de acento, con el porcentaje centrado en blanco. */
+.audiencias-progreso__barra {
+  height: 100%;
+  min-width: 2.5em;
+  background: linear-gradient(90deg, #2e9e4f, #4caf50);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 22px;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* =========================================================================
+   Resultado del sorteo de vacantes.
+   ========================================================================= */
+
+/* Banner del resumen: recuadro suave azul con borde redondeado. */
+.audiencias-sorteo-resumen {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.25rem;
+  background: #e6f2fb;
+  border: 1px solid #b6dcf3;
+  border-left: 5px solid #0073bb;
+  border-radius: 8px;
+}
+
+/* Conteo principal «Se asignarán N de M» en tamaño mayor. */
+.audiencias-sorteo-resumen__conteo {
+  font-size: 1.15rem;
+  color: #06436c;
+}
+
+/* Número destacado dentro del conteo. */
+.audiencias-sorteo-resumen__numero {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0073bb;
+}
+
+/* Líneas secundarias del resumen (sobrantes/libres), en tono atenuado. */
+.audiencias-sorteo-resumen__detalle {
+  margin: 0.5rem 0 0;
+  color: #335a73;
+  font-size: 0.95rem;
+}
+
+/* Tabla de pares del sorteo: filas espaciadas con divisores suaves. */
+.audiencias-sorteo-tabla {
+  width: 100%;
+  margin: 0 0 1.25rem;
+  border-collapse: collapse;
+}
+
+.audiencias-sorteo-tabla th,
+.audiencias-sorteo-tabla td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid #e4e7ea;
+  vertical-align: top;
+  text-align: left;
+}
+
+/* Alterna el fondo de las filas para facilitar la lectura. */
+.audiencias-sorteo-tabla tbody tr:nth-child(even) {
+  background: #f7f9fb;
+}
+
+.audiencias-sorteo-tabla tbody tr:hover {
+  background: #eef5fb;
+}
+
+/* Metadatos del funcionario (cédula · posición) en texto tenue. */
+.audiencias-funcionario-meta {
+  color: #6b7480;
+}
+
+/* Designación «Institución — Vacante» resaltada en verde (igual que el tablero). */
+.audiencias-designacion {
+  color: #1a7f37;
+  font-weight: 700;
+}
+
+/* Ubicación de la institución bajo la designación, en texto tenue. */
+.audiencias-ubicacion {
+  display: inline-block;
+  margin-top: 2px;
+  color: #6b7480;
+}
+
+/* Bloque de sobrantes tipo aviso: fondo amarillo claro y borde de advertencia. */
+.audiencias-sorteo-sobrantes {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1.1rem;
+  background: #fdf6e3;
+  border: 1px solid #f0e0a8;
+  border-left: 5px solid #d4a417;
+  border-radius: 8px;
+}
+
+.audiencias-sorteo-sobrantes__titulo {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: #8a6d1a;
+}
+
+.audiencias-sorteo-sobrantes ul {
+  margin: 0;
+}
+
+/* Barra de acciones al pie: botones agrupados, bien espaciados. */
+.audiencias-acciones-sorteo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e4e7ea;
+}
+
+/* Acción primaria (Confirmar): sólida en verde de acento. */
+.audiencias-acciones-sorteo .button--primary {
+  background: #2e9e4f;
+  border-color: #2e9e4f;
+  color: #fff;
+}
+
+.audiencias-acciones-sorteo .button--primary:hover,
+.audiencias-acciones-sorteo .button--primary:focus {
+  background: #277f41;
+  border-color: #277f41;
+  color: #fff;
+}
+
+/* Acción secundaria (Repetir): contorno azul sobre fondo claro. */
+.audiencias-acciones-sorteo .button--secundario {
+  background: #fff;
+  border: 1px solid #0073bb;
+  color: #0073bb;
+}
+
+.audiencias-acciones-sorteo .button--secundario:hover,
+.audiencias-acciones-sorteo .button--secundario:focus {
+  background: #e6f2fb;
+  color: #06436c;
+}
+
+/* Acción terciaria (Cancelar): tenue, estilo enlace sin recuadro fuerte. */
+.audiencias-acciones-sorteo .button--terciario {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #6b7480;
+  box-shadow: none;
+}
+
+.audiencias-acciones-sorteo .button--terciario:hover,
+.audiencias-acciones-sorteo .button--terciario:focus {
+  color: #0073bb;
+  text-decoration: underline;
+}

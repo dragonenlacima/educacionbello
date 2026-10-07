@@ -1,0 +1,26 @@
+# Pestañas locales del módulo Audiencias.
+# La página de asignación muestra la pestaña «Asignar funcionario» como tarea
+# local sobre la propia vacante.
+
+audiencias.vacante.asignar:
+  title: 'Asignar funcionario'
+  route_name: audiencias.vacante.asignar
+  base_route: audiencias.vacante.asignar
+
+# Pestaña local de reversa, mostrada sobre la propia página de desasignación.
+audiencias.vacante.desasignar:
+  title: 'Reversar asignación'
+  route_name: audiencias.vacante.desasignar
+  base_route: audiencias.vacante.desasignar
+
+# Pestañas de la sección de vacantes: el listado (reversa) y la eliminación
+# masiva comparten base_route, por lo que aparecen como pestañas hermanas.
+audiencias.vacante.listado:
+  title: 'Vacantes'
+  route_name: audiencias.vacante.list
+  base_route: audiencias.vacante.list
+
+audiencias.vacante.eliminar_masivo:
+  title: 'Eliminar vacantes'
+  route_name: audiencias.vacante.eliminar_masivo
+  base_route: audiencias.vacante.list

@@ -1,0 +1,5 @@
+name: Audiencias
+description: 'Gestión de vacantes administrativas del municipio de Bello.'
+type: module
+core_version_requirement: ^11
+package: Custom

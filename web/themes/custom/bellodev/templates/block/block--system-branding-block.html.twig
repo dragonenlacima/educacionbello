@@ -1,0 +1,43 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * Default theme implementation for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ *
+ * @ingroup themeable
+ */
+#}
+{% block content %}
+	{% if site_logo %}
+		<div class="inline-block">
+			<a href="{{ path('<front>') }}" rel="home">
+				<img src="{{ site_logo }}" alt="{{ 'Home'|t }}" fetchpriority="high" width="240"/>
+			</a>
+			{% if site_name %}
+				<div class="mb-0 mt-2 max-w-[240px] text-center">
+					<a href="{{ path('<front>') }}" class="no-underline text-gray-500 font-semibold" rel="home">
+						{{ site_name }}
+					</a>
+				</div>
+			{% endif %}
+			{% if site_slogan %}
+				<div class="mb-0 mt-2 text-gray-500">
+					{{ site_slogan }}
+				</div>
+			{% endif %}
+		</div>
+		<div class="inline-block lg:hidden">
+			<button id="menu-mobile-open" class="menu-mobile__open ml-4 text-govcolor-black hover:text-govcolor-blue focus:outline-none" aria-label="Open Menu">
+				<img src="/{{ active_theme_path() }}/assets/dist/images/bars.svg" alt="Menú móvil" fetchpriority="high" width="44"/>
+			</button>
+		</div>
+	{% endif %}
+{% endblock %}

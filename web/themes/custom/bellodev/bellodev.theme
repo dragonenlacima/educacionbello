@@ -1,0 +1,454 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function bellodev_preprocess_html(array &$variables): void {
+  // Add preconnect for Google Fonts.
+  $variables['page']['#attached']['html_head'][] = [
+    [
+      '#tag' => 'link',
+      '#attributes' => [
+        'rel' => 'preconnect',
+        'href' => 'https://fonts.googleapis.com',
+      ],
+    ],
+    'google_fonts_preconnect',
+  ];
+
+  $variables['page']['#attached']['html_head'][] = [
+    [
+      '#tag' => 'link',
+      '#attributes' => [
+        'rel' => 'preconnect',
+        'href' => 'https://fonts.gstatic.com',
+        'crossorigin' => 'anonymous',
+      ],
+    ],
+    'google_fonts_gstatic_preconnect',
+  ];
+}
+
+function bellodev_preprocess_page(array &$variables): void {
+
+  // Obtener cualquier variable de la ruta
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  // Función para verificar si una región tiene bloques activos
+  $region_has_blocks = function($region_name) {
+    $block_storage = \Drupal::entityTypeManager()->getStorage('block');
+    $theme_name = \Drupal::theme()->getActiveTheme()->getName();
+
+    // Cargar todos los bloques de la región en el tema actual
+    $blocks = $block_storage->loadByProperties([
+      'theme' => $theme_name,
+      'region' => $region_name,
+    ]);
+
+    // Filtrar solo bloques habilitados
+    foreach ($blocks as $block) {
+      if ($block->status()) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  if (!empty($variables['page']['messages'])) {
+    $variables['has_messages'] = true;
+  }
+
+  // Verificar si las regiones tienen bloques configurados
+  $content_has_blocks = $region_has_blocks('content');
+  $sidebar_has_blocks = $region_has_blocks('sidebar_second');
+  $breadcrumb_has_blocks = $region_has_blocks('breadcrumb');
+
+  // Contenido solo la sección de breadcrumb o migas de pan
+  if ($breadcrumb_has_blocks) {
+    $variables['has_breadcrumb'] = true;
+  }
+
+  // Solo contenido
+  if (!$sidebar_has_blocks && $content_has_blocks) {
+    $variables['only_content'] = true;
+  }
+
+  // Solo sección lateral
+  if ($sidebar_has_blocks && !$content_has_blocks) {
+    $variables['only_sidebar'] = true;
+  }
+
+  if (!$content_has_blocks && !$sidebar_has_blocks) {
+    $variables['no_content'] = true;
+  }
+
+  if ($content_has_blocks && $sidebar_has_blocks) {
+    $variables['content_lateral'] = true;
+  }
+
+  /**
+   * Sección menú móvil
+   */
+  $menu_tree = \Drupal::menuTree();
+  $menu_name = 'main';
+
+  // Crear parámetros para cargar todos los niveles
+  $parameters = new \Drupal\Core\Menu\MenuTreeParameters();
+  $parameters->onlyEnabledLinks(); // Solo enlaces activos/habilitados
+  $parameters->setActiveTrail(\Drupal::service('menu.active_trail')->getActiveTrailIds($menu_name));
+
+  // Cargar el árbol del menú
+  $tree = $menu_tree->load($menu_name, $parameters);
+
+  // Aplicar manipuladores para verificar acceso y ordenar
+  $manipulators = [
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ];
+  $tree = $menu_tree->transform($tree, $manipulators);
+
+  // Función recursiva para procesar tree elements (objetos MenuLinkTreeElement)
+  // Parámetro $depth para controlar niveles (1 = primer nivel, 2 = segundo nivel)
+  $process_tree = function($tree_items, $depth = 1) use (&$process_tree) {
+    $result = [];
+    foreach ($tree_items as $tree_item) {
+      // $tree_item es un objeto MenuLinkTreeElement
+      $link = $tree_item->link;
+
+      // Saltar items sin URL o no accesibles
+      if (!$link || !$link->getUrlObject()->access()) {
+        continue;
+      }
+
+      $menu_item = [
+        'title' => $link->getTitle(),
+        'url' => $link->getUrlObject()->toString(),
+        'in_active_trail' => $tree_item->inActiveTrail,
+        'has_children' => $tree_item->hasChildren,
+        'below' => [],
+      ];
+
+      // Procesar subniveles solo si no hemos alcanzado el límite (2 niveles)
+      if (!empty($tree_item->subtree) && $depth < 2) {
+        $menu_item['below'] = $process_tree($tree_item->subtree, $depth + 1);
+      }
+
+      $result[] = $menu_item;
+    }
+    return $result;
+  };
+
+  // Procesar el tree directamente, empezando en nivel 1
+  $variables['menu_mobile'] = !empty($tree) ? $process_tree($tree, 1) : [];
+
+  /**
+   * Configuración del carrusel desde el módulo custom_dynamic_fields
+   */
+
+  $config_swiper = \Drupal::config('custom_dynamic_fields.settings');
+
+  $slides_swiper = null !== $config_swiper->get('fields') && $variables['is_front'] ? $config_swiper->get('fields') : [];
+
+  // Procesar las imágenes de los slides
+  if (!empty($slides_swiper) && is_array($slides_swiper)) {
+    foreach ($slides_swiper as $key => &$slide) {
+      if (!empty($slide['image'])) {
+        // Cargar el archivo desde el ID
+        $file = \Drupal\file\Entity\File::load($slide['image']);
+        if ($file) {
+          // URL directa de la imagen original
+          $slide['image_url'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+        }
+      }
+    }
+  }
+
+  $variables['slides_swiper'] = $slides_swiper;
+
+  /**
+   * Configuración de la página de login
+   */
+  if ($route_name == 'user.login') {
+    $maintenance_mode = \Drupal::state()->get('system.maintenance_mode');
+    $logo = theme_get_setting('logo.url');
+    $site_name = theme_get_setting('site_name');
+    $variables['logo'] = $logo;
+    $variables['site_name'] = $site_name;
+    $variables['maintenance_mode'] = $maintenance_mode;
+    unset($variables['page']['content']['bellodev_pestanas']);
+    unset($variables['page']['content']['bellodev_secondary_local_tasks']);
+    unset($variables['page']['content']['bellodev_primary_local_tasks']);
+  }
+
+  /**
+   * Variable para verificar si es un usuario logueado regular
+   * (no anónimo y no superadministrador)
+   */
+  $current_user = \Drupal::currentUser();
+  $is_authenticated = $current_user->isAuthenticated();
+  $is_not_superadmin = !in_array('administrator', $current_user->getRoles());
+  
+  // Usuario logueado que NO es superadministrador ni anónimo
+  $variables['user_authenticated'] = $is_authenticated && $is_not_superadmin;
+
+  // Nombre del usuario autenticado
+  if ($is_authenticated) {
+    $variables['user_name'] = $current_user->getAccountName();
+    $variables['user_id'] = $current_user->id();
+    
+    // Opcionalmente, cargar el usuario completo para obtener más información
+    $user_entity = \Drupal\user\Entity\User::load($current_user->id());
+    if ($user_entity) {
+      // Nombre para mostrar (display name)
+      $variables['user_display_name'] = $user_entity->getDisplayName();
+    }
+  }
+
+}
+
+function bellodev_preprocess_block(array &$variables): void {
+  if (isset($variables['elements']['#id'])) {
+    // Normalizar ID: "block-bello-breadcrumbs" → "bello_breadcrumbs"
+    $html_id = $variables['elements']['#id'];
+    $entity_id = str_replace('-', '_', preg_replace('/^block-/', '', $html_id));
+
+    $block = \Drupal::entityTypeManager()
+      ->getStorage('block')
+      ->load($entity_id);
+
+    if ($block) {
+      if ($block->getRegion() === 'breadcrumb' && $block->getPluginId() !== 'system_breadcrumb_block') {
+        unset($variables['content']);
+        unset($variables['label']);
+      }
+    }
+  }
+  if (isset($variables['elements']['#id']) && $variables['elements']['#id'] === 'bellodev_site_branding') {
+    $variables['attributes']['class'][] = 'w-full';
+    $variables['attributes']['class'][] = 'flex';
+    $variables['attributes']['class'][] = 'justify-between';
+    $variables['attributes']['class'][] = 'items-center';
+    $variables['attributes']['class'][] = 'px-4';
+    $variables['attributes']['class'][] = 'mb-6';
+    $variables['attributes']['class'][] = 'md:px-0';
+    $variables['attributes']['class'][] = 'lg:px-0';
+    $variables['attributes']['class'][] = 'xl:px-0';
+    $variables['attributes']['class'][] = 'lg:mb-0';
+  }
+
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for form_element.
+ */
+function bellodev_theme_suggestions_form_element_alter(array &$suggestions, array $variables): void {
+  $element = $variables['element'];
+
+  // Verificar si el elemento pertenece al formulario de búsqueda
+  if ((isset($element['#parents']) && in_array('keys', $element['#parents'])) ||
+      (isset($element['#name']) && $element['#name'] === 'keys')) {
+    $suggestions[] = 'form_element__search_block_form';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for input.
+ */
+function bellodev_preprocess_input(array &$variables): void {
+  $element = $variables['element'];
+  
+  // Detectar el input del bloque de búsqueda usando el atributo personalizado
+  if (isset($element['#attributes']['data-search-block']) && 
+      $element['#attributes']['data-search-block'] === 'true') {
+    
+    // Pasar variable a la plantilla para que sepa que NO debe agregar fieldtext
+    $variables['is_search_block_input'] = true;
+    
+    // Agregar clases específicas para el bloque de búsqueda
+    $search_block_classes = [
+      'outline-none',
+      'px-1',
+      'py-0',
+      'mx-0',
+      'my-0',
+      'w-full',
+      'text-base',
+      'text-gray-900',
+      'placeholder:text-gray-400',
+      'bg-transparent',
+      'border-0',
+      'focus:outline-none',
+      'focus:ring-0',
+    ];
+    
+    foreach ($search_block_classes as $class) {
+      $variables['attributes']['class'][] = $class;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for form.html.twig.
+ */
+function bellodev_preprocess_form(array &$variables): void {
+  if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
+    // Agregar clases personalizadas
+    $variables['attributes']['class'][] = 'flex';
+    $variables['attributes']['class'][] = '!border-cobalt-500';
+    $variables['attributes']['class'][] = 'border-1';
+    $variables['attributes']['class'][] = 'rounded-full';
+    $variables['attributes']['class'][] = 'px-1';
+    $variables['attributes']['class'][] = 'py-1';
+  }
+}
+
+function bellodev_form_search_block_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['#attributes']['class'][] = 'max-w-80';
+  $form['#attributes']['class'][] = 'w-full';
+  $form['#attributes']['class'][] = 'mx-auto';
+  
+  // Campo de búsqueda - placeholder y marcador personalizado
+  if (isset($form['keys'])) {
+    $form['keys']['#attributes']['placeholder'] = t('Buscar...');
+    // Agregar un atributo personalizado para identificar este input específicamente
+    $form['keys']['#attributes']['data-search-block'] = 'true';
+  }
+
+  // Cambiar el botón submit por image submit
+  if (isset($form['actions']['submit'])) {
+    $form['actions']['submit']['#type'] = 'image_button';
+    $form['actions']['submit']['#src'] = \Drupal::service('extension.list.theme')->getPath('bellodev') . '/assets/dist/images/search.svg';
+    $form['actions']['submit']['#attributes']['alt'] = t('Search');
+    $form['actions']['submit']['#attributes']['title'] = t('Search');
+    $form['actions']['submit']['#attributes']['width'] = '28';
+    $form['actions']['submit']['#attributes']['class'] = ['rounded-full' ];
+  }
+}
+
+function bellodev_theme_suggestions_image_formatter_alter(array &$suggestions, array $variables) {
+  // Get the field name if available
+  if (isset($variables['item'])) {
+    $field_name = $variables['item']->getParent()->getName();
+
+    // Add suggestion for user_picture field
+    if ($field_name == 'user_picture') {
+      $suggestions[] = 'image_formatter__user_picture';
+
+      // Get entity type if available
+      $entity = $variables['item']->getEntity();
+      if ($entity) {
+        $entity_type = $entity->getEntityTypeId();
+        $suggestions[] = 'image_formatter__' . $entity_type . '__user_picture';
+      }
+    }
+  }
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for image.
+ */
+function bellodev_theme_suggestions_image_alter(array &$suggestions, array $variables) {
+  // Check alt text for user picture indicators
+  if (isset($variables['alt'])) {
+    $alt_text = (string) $variables['alt'];
+    if (strpos($alt_text, 'Profile picture for user') === 0) {
+      $suggestions[] = 'image__user_picture';
+    }
+  }
+
+  return $suggestions;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for menu_local_task.
+ */
+function bellodev_preprocess_menu_local_task(array &$variables): void {
+  // Add class to the link element
+  if (isset($variables['link']['#options']['attributes']['class'])) {
+    $variables['link']['#options']['attributes']['class'][] = 'task-default-link';
+  }
+  else {
+    $variables['link']['#options']['attributes']['class'] = ['task-default-link'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for maintenance_page.
+ */
+function bellodev_preprocess_maintenance_page(array &$variables): void {
+  $variables['logo_image'] = theme_get_setting('logo.url');
+  $site_config = \Drupal::config('system.site');
+  $site_name = $site_config->get('name');
+
+  // Obtener el mensaje de mantenimiento desde la configuración
+  // Drupal almacena esto en system.maintenance
+  $maintenance_config = \Drupal::config('system.maintenance');
+  $maintenance_message = $maintenance_config->get('message');
+  
+  // Si no hay mensaje en la configuración, intentar obtenerlo de las variables
+  // que Drupal ya pasa (desde el formulario de modo mantenimiento)
+  if (empty($maintenance_message) && isset($variables['content']['#markup'])) {
+    $maintenance_message = $variables['content']['#markup'];
+  }
+  
+  // Procesar tokens en el mensaje (@site, %site, etc.)
+  if (!empty($maintenance_message)) {
+    // Reemplazar @site y %site con el nombre del sitio
+    $maintenance_message = str_replace('@site', $site_name, $maintenance_message);
+    $maintenance_message = str_replace('%site', $site_name, $maintenance_message);
+    
+    // También usar el sistema de traducción de Drupal para procesar otros tokens
+    $maintenance_message = t($maintenance_message, ['@site' => $site_name, '%site' => $site_name]);
+  }
+  
+  // Pasar a la plantilla
+  $variables['maintenance_message'] = $maintenance_message;
+  
+  // También puedes capturar el nombre del sitio
+  $variables['site_name'] = $site_name;
+}
+
+/**
+ * Verificar si está habilitada la recuperación de contraseña.
+ */
+function verify_recovery_password() {
+  $user_settings = \Drupal::config('user.settings');
+  
+  // Verificar si el correo de recuperación está habilitado
+  $password_reset_enabled = $user_settings->get('password_reset_enabled');
+  
+  // En versiones anteriores o si no existe, verificar por el timeout
+  $password_reset_timeout = $user_settings->get('password_reset_timeout');
+  
+  return $password_reset_enabled !== FALSE && $password_reset_timeout > 0;
+}
+
+function bellodev_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $verify_recovery_password = verify_recovery_password();
+  if ($verify_recovery_password) {
+    $form['actions']['submit']['#attributes']['class'][] = 'mb-4';
+    $form['actions']['submit']['#suffix'] = '<div><a href="/user/password" class="text-cobalt underline text-sm">Olvidé mi contraseña</a></div>';
+  }
+
+  // Cambio el placeholder del campo de usuario
+  $form['name']['#placeholder'] = t('Usuario o correo electrónico');
+
+  // Cambio el placeholder del campo de contraseña
+  $form['pass']['#placeholder'] = t('Contraseña');
+}
+
+function bellodev_preprocess_page_title(&$variables) {
+  if (\Drupal::routeMatch()->getRouteName() === 'user.login') {
+
+    // Cambio el titulo del formulario de inicio de sesión
+    $variables['title'] = t('Inicio de sesión');
+    // Cambio el color del titulo
+    $variables['title_attributes']['class'][] = 'text-cobalt';
+    // Cambio el alineamiento del titulo
+    $variables['title_attributes']['class'][] = 'text-center';
+  }
+}

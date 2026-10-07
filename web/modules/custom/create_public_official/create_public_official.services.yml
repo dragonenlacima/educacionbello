@@ -1,0 +1,6 @@
+services:
+  create_public_official.users:
+    class: Drupal\create_public_official\Service\UsersData
+    arguments: ['@database']
+  service_spreadsheet.export_data:
+    class: Drupal\create_public_official\Service\SpreadsheetData

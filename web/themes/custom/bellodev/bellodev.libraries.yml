@@ -1,0 +1,30 @@
+global:
+  version: 1.0.0
+  css:
+    theme:
+      assets/dist/css/main.css: {}
+  js:
+    assets/dist/js/main.js: 
+      preprocess: false
+  dependencies:
+    - core/drupal
+    - core/once
+    - bellodev/google-fonts
+
+# Google Fonts
+google-fonts:
+  css:
+    theme:
+      https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap: { type: external }
+
+# Swiper JS Carousel
+swiperjs:
+  css:
+    theme:
+      https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css: { type: external }
+      assets/libraries/css/swipercss.css: {}
+  js:
+    https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js: { type: external, minified: true }
+    assets/libraries/js/swiperjs.js: {}
+  dependencies:
+    - core/drupal

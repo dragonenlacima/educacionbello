@@ -1,0 +1,85 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a details element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the details element.
+ * - errors: (optional) Any errors for this details element, may not be set.
+ * - title: (optional) The title of the element, may not be set.
+ * - summary_attributes: A list of HTML attributes for the summary element.
+ * - description: (optional) The description of the element, may not be set.
+ * - children: (optional) The children of the element, may not be set.
+ * - value: (optional) The value of the element, may not be set.
+ *
+ * @see\Drupal\Core\Form\FormPreprocess::preprocessDetails()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set details_classes = [
+    'rounded-lg',
+    'border',
+    'border-gray-200',
+    'bg-white',
+    'shadow-sm',
+    'transition-all',
+    'duration-300',
+    'hover:shadow-md',
+    'mb-4',
+    errors ? 'border-red-300 bg-red-50',
+  ]
+%}
+<details{{attributes.addClass(details_classes)}}>
+	{%
+    set summary_classes = [
+      'cursor-pointer',
+      'px-5',
+      'py-4',
+      'font-medium',
+      'text-gray-900',
+      'transition-colors',
+      'duration-200',
+      'hover:bg-gray-50',
+      'focus:outline-none',
+      'focus:ring-2',
+      'focus:ring-blue-500',
+      'focus:ring-offset-2',
+      'rounded-lg',
+      'select-none',
+      'marker:text-blue-600',
+      required ? 'js-form-required',
+      required ? 'form-required',
+      required ? 'after:content-["*"]',
+      required ? 'after:ml-1',
+      required ? 'after:text-red-500',
+    ]
+  %}
+	{%- if title -%}
+		<summary{{summary_attributes.addClass(summary_classes)}}>{{ title }}</summary>
+	{%- endif -%}
+
+	<div class="px-5 pb-5 pt-2">
+		{% if errors %}
+			<div class="mb-4 rounded-md border border-red-300 bg-red-50 p-4 text-sm text-red-800 shadow-sm">
+				<div class="flex items-start">
+					<svg class="h-5 w-5 text-red-400 mr-2 flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/>
+					</svg>
+					<div class="flex-1">{{ errors }}</div>
+				</div>
+			</div>
+		{% endif %}
+
+		{%- if description -%}
+			{% set description_attributes = create_attribute({id: attributes['aria-describedby']}) %}
+			<div{{description_attributes.addClass('text-smtext-gray-600mb-4leading-relaxed')}}>{{ description }}</div>
+		{%- endif -%}
+
+		<div class="space-y-4">
+			{{ children }}
+			{{ value }}
+		</div>
+	</div>
+</details>

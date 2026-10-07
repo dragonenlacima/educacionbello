@@ -1,0 +1,22 @@
+services:
+  # Repositorio de instituciones.
+  audiencias.institucion_repository:
+    class: Drupal\audiencias\Repository\InstitucionRepository
+    arguments: ['@database']
+  # Repositorio de cargos.
+  audiencias.cargo_repository:
+    class: Drupal\audiencias\Repository\CargoRepository
+    arguments: ['@database']
+  # Repositorio de funcionarios.
+  audiencias.funcionario_repository:
+    class: Drupal\audiencias\Repository\FuncionarioRepository
+    arguments: ['@database']
+  # Repositorio de vacantes.
+  audiencias.vacante_repository:
+    class: Drupal\audiencias\Repository\VacanteRepository
+    arguments: ['@database']
+  # Impide que la respuesta del sorteo quede en cachés HTTP intermedias.
+  audiencias.no_store_sorteo_subscriber:
+    class: Drupal\audiencias\EventSubscriber\NoStoreSorteoSubscriber
+    tags:
+      - { name: event_subscriber }

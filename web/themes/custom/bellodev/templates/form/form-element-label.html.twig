@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a form element label.
+ *
+ * Available variables:
+ * - title: The label's text.
+ * - title_display: Elements title_display setting.
+ * - required: An indicator for whether the associated form element is required.
+ * - attributes: A list of HTML attributes for the label.
+ *
+ * @see\Drupal\Core\Form\FormPreprocess::preprocessFormElementLabel()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    title_display == 'after' ? 'option',
+    title_display == 'invisible' ? 'visually-hidden',
+    required ? 'js-form-required',
+    required ? 'form-required',
+    'inline-block',
+    'mb-1',
+    'font-semibold',
+  ]
+%}
+{% if title is not empty or required -%}
+	<label{{attributes.addClass(classes)}}>
+		{{ title }}
+		{% if required %}
+			*
+		{% endif %}
+	</label>
+{%- endif %}

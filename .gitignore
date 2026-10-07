@@ -1,0 +1,31 @@
+# Dependencias instaladas por Composer (se reconstruyen con `composer install`).
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# Archivos subidos por usuarios y generados por Drupal.
+/web/sites/*/files/
+/web/sites/*/private/
+
+# Credenciales y configuración propia de cada entorno.
+/web/sites/*/settings.php
+/web/sites/*/settings.local.php
+/web/sites/*/services.yml
+
+# Padrón con datos personales (cédulas): no se versiona.
+/web/modules/custom/create_public_official/data.php
+
+# Dependencias y compilados de Node (ver también el .gitignore del tema).
+node_modules/
+
+# Configuración local de Claude Code.
+/.claude/settings.local.json
+
+# Basura de sistema operativo.
+*:Zone.Identifier
+*Zone.Identifier
+.DS_Store
+Thumbs.db

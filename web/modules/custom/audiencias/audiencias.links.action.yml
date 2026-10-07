@@ -1,0 +1,25 @@
+# Botones de acción local «+ Agregar» que aparecen sobre cada listado.
+
+audiencias.institucion.add:
+  title: 'Agregar institución'
+  route_name: audiencias.institucion.add
+  appears_on:
+    - audiencias.institucion.list
+
+audiencias.cargo.add:
+  title: 'Agregar cargo'
+  route_name: audiencias.cargo.add
+  appears_on:
+    - audiencias.cargo.list
+
+audiencias.funcionario.add:
+  title: 'Agregar funcionario'
+  route_name: audiencias.funcionario.add
+  appears_on:
+    - audiencias.funcionario.list
+
+audiencias.vacante.add:
+  title: 'Agregar vacante'
+  route_name: audiencias.vacante.add
+  appears_on:
+    - audiencias.vacante.list

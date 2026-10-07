@@ -1,0 +1,642 @@
+@import "tailwindcss";
+
+@source "../../../templates/**/*.twig";
+@source "../../../*.theme";
+@source "../js/**/*.js";
+@source "../../../../../modules/**/*.twig";
+@source "../../../../../modules/**/*.theme";
+@source "../../../../../modules/**/*.module";
+@source "../../../../../modules/**/*.js";
+@source "../../../../../modules/**/*.css";
+@source "../../../../../modules/**/*.scss";
+@source "../../../../../modules/**/*.php";
+@source inline("grid grid-cols-1 grid-cols-2 md:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-x-4 gap-y-0");
+
+@theme {
+  --color-cobalt-50: #e6f0fd;
+  --color-cobalt-100: #cce0fb;
+  --color-cobalt-200: #99c2f7;
+  --color-cobalt-300: #66a3f3;
+  --color-cobalt-400: #3385ef;
+  --color-cobalt-500: #0943b5;
+  --color-cobalt-600: #0839a3;
+  --color-cobalt-700: #062b7a;
+  --color-cobalt-800: #051d52;
+  --color-cobalt-900: #030f29;
+  --color-cobalt-950: #020814;
+
+  --color-matterhorn-50: #f6f6f6;
+  --color-matterhorn-100: #e7e7e7;
+  --color-matterhorn-200: #d1d1d1;
+  --color-matterhorn-300: #b0b0b0;
+  --color-matterhorn-400: #888888;
+  --color-matterhorn-500: #4c4c4c;
+  --color-matterhorn-600: #3d3d3d;
+  --color-matterhorn-700: #2e2e2e;
+  --color-matterhorn-800: #1f1f1f;
+  --color-matterhorn-900: #141414;
+  --color-matterhorn-950: #0a0a0a;
+
+  --color-havelock-50: #eff4fd;
+  --color-havelock-100: #dfe9fb;
+  --color-havelock-200: #c5d8f8;
+  --color-havelock-300: #9cbff3;
+  --color-havelock-400: #6c9eec;
+  --color-havelock-500: #4672c8;
+  --color-havelock-600: #385bb3;
+  --color-havelock-700: #2d4792;
+  --color-havelock-800: #263978;
+  --color-havelock-900: #222f64;
+  --color-havelock-950: #171f3d;
+
+  --color-topical-blue-50: #f7f9fd;
+  --color-topical-blue-100: #eff4fb;
+  --color-topical-blue-200: #dfe9f7;
+  --color-topical-blue-300: #cfddf3;
+  --color-topical-blue-400: #b5c7e9;
+  --color-topical-blue-500: #9ab1df;
+  --color-topical-blue-600: #7b95c9;
+  --color-topical-blue-700: #6078a6;
+  --color-topical-blue-800: #485a7d;
+  --color-topical-blue-900: #303c54;
+  --color-topical-blue-950: #1d2433;
+
+  --color-golden-brown-50: #fef8e8;
+  --color-golden-brown-100: #fdf1d1;
+  --color-golden-brown-200: #fbe3a3;
+  --color-golden-brown-300: #f9d575;
+  --color-golden-brown-400: #d7b633;
+  --color-golden-brown-500: #9d7700;
+  --color-golden-brown-600: #8a6a00;
+  --color-golden-brown-700: #685000;
+  --color-golden-brown-800: #453500;
+  --color-golden-brown-900: #231b00;
+  --color-golden-brown-950: #120e00;
+
+  --color-sunglow-50: #fffcf0;
+  --color-sunglow-100: #fff9e1;
+  --color-sunglow-200: #fff3c3;
+  --color-sunglow-300: #ffeda5;
+  --color-sunglow-400: #fed86a;
+  --color-sunglow-500: #fecc2f;
+  --color-sunglow-600: #e5b729;
+  --color-sunglow-700: #bf991f;
+  --color-sunglow-800: #997a19;
+  --color-sunglow-900: #7d6414;
+  --color-sunglow-950: #4d3e0c;
+
+  --color-vis-vis-50: #fffefb;
+  --color-vis-vis-100: #fffdf7;
+  --color-vis-vis-200: #fffbef;
+  --color-vis-vis-300: #fff8e7;
+  --color-vis-vis-400: #fef2bf;
+  --color-vis-vis-500: #fee697;
+  --color-vis-vis-600: #e5cf88;
+  --color-vis-vis-700: #bfac72;
+  --color-vis-vis-800: #99895b;
+  --color-vis-vis-900: #7d704a;
+  --color-vis-vis-950: #4d452e;
+
+  --color-silver-50: #fcfcfc;
+  --color-silver-100: #f9f9f9;
+  --color-silver-200: #f3f3f3;
+  --color-silver-300: #ededed;
+  --color-silver-400: #d3d3d3;
+  --color-silver-500: #b9b9b9;
+  --color-silver-600: #a7a7a7;
+  --color-silver-700: #8c8c8c;
+  --color-silver-800: #707070;
+  --color-silver-900: #5c5c5c;
+  --color-silver-950: #393939;
+
+  --color-solitude-50: #fbfcfe;
+  --color-solitude-100: #f7f9fd;
+  --color-solitude-200: #eff3fb;
+  --color-solitude-300: #e5ecf8;
+  --color-solitude-400: #d1ddf2;
+  --color-solitude-500: #bdceec;
+  --color-solitude-600: #a4b8d4;
+  --color-solitude-700: #8499b1;
+  --color-solitude-800: #6a7b8e;
+  --color-solitude-900: #576574;
+  --color-solitude-950: #363f48;
+
+  --color-corn-silk-50: #fffffe;
+  --color-corn-silk-100: #fffefd;
+  --color-corn-silk-200: #fffefb;
+  --color-corn-silk-300: #fffdf9;
+  --color-corn-silk-400: #fffbf0;
+  --color-corn-silk-500: #fffae8;
+  --color-corn-silk-600: #e5e1d1;
+  --color-corn-silk-700: #bfbcae;
+  --color-corn-silk-800: #99968b;
+  --color-corn-silk-900: #7d7b72;
+  --color-corn-silk-950: #4d4c46;
+
+  --color-white-smoke-50: #fefefe;
+  --color-white-smoke-100: #fdfdfd;
+  --color-white-smoke-200: #fbfbfb;
+  --color-white-smoke-300: #f9f9f9;
+  --color-white-smoke-400: #f6f6f6;
+  --color-white-smoke-500: #f4f4f4;
+  --color-white-smoke-600: #dcdcdc;
+  --color-white-smoke-700: #b8b8b8;
+  --color-white-smoke-800: #939393;
+  --color-white-smoke-900: #797979;
+  --color-white-smoke-950: #4a4a4a;
+
+  --color-portage-50: #f2f5fc;
+  --color-portage-100: #e6ebf9;
+  --color-portage-200: #ccd7f3;
+  --color-portage-300: #b3c3ed;
+  --color-portage-400: #9bb1e3;
+  --color-portage-500: #83a0da;
+  --color-portage-600: #7690c4;
+  --color-portage-700: #6278a4;
+  --color-portage-800: #4e6083;
+  --color-portage-900: #404f6c;
+  --color-portage-950: #283143;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 700;
+    color: var(--color-matterhorn-500);
+  }
+
+  h1 {
+    font-size: 2.625rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    @media (width < 1024px) {
+      font-size: 2.125rem;
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  h2 {
+    font-size: 2.125rem;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    @media (width < 1024px) {
+      font-size: 1.625rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.625rem;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    @media (width < 1024px) {
+      font-size: 1.375rem;
+      margin-bottom: 0.875rem;
+    }
+  }
+
+  h4 {
+    font-size: 1.375rem;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    @media (width < 1024px) {
+      font-size: 1.25rem;
+      margin-bottom: 0.875rem;
+    }
+  }
+
+  h5 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    @media (width < 1024px) {
+      font-size: 1.125rem;
+      margin-bottom: 0.875rem;
+    }
+  }
+
+  h6 {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    @media (width < 1024px) {
+      margin-bottom: 0.875rem;
+    }
+  }
+
+  body {
+    font-family: Verdana, sans-serif;
+    color: var(--color-matterhorn-500);
+    line-height: 1.6;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  a {
+    color: var(--color-cobalt-500);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-havelock-500);
+    }
+
+    &:focus-visible {
+      color: var(--color-matterhorn-500);
+    }
+
+    &:visited {
+      color: var(--color-matterhorn-500);
+    }
+
+    &[aria-disabled="true"] {
+      color: var(--color-silver-500);
+    }
+  }
+}
+
+@layer utilities {
+  /* Agregar utilidades personalizadas aquí */
+  .in-active-trail {
+    @apply text-cobalt-700;
+  }
+
+  .is-active {
+    @apply text-cobalt-900;
+  }
+
+  .js-hide   {
+    @apply hidden;
+  }
+
+  .webform-element-description {
+    @apply my-4;
+  }
+}
+
+/* Clase visually-hidden de Drupal */
+.visually-hidden:not(:focus):not(:active),
+.visually-hidden--focusable:not(:focus):not(:active) {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  white-space: nowrap;
+}
+
+/* Visible cuando tiene foco (Tab) */
+.visually-hidden:focus,
+.visually-hidden:active,
+.visually-hidden--focusable:focus,
+.visually-hidden--focusable:active {
+  position: static !important;
+  overflow: visible;
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+/*
+  *++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  */
+.button-img-search-site {
+  border-radius: 50%;
+}
+
+#search-block-form #edit-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+Estilos para el menú móvil */
+.menu-mobile {
+  width: 100% !important;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%) !important;
+  transition: transform 0.3s ease !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  height: 100% !important;
+  z-index: 50 !important;
+}
+
+.menu-mobile.menu-mobile--open {
+  transform: translateX(0) !important;
+}
+
+.menu-mobile__item--has-children > .menu-mobile__submenu {
+  display: none;
+  opacity: 0;
+  transition:
+    display 0.3s allow-discrete,
+    opacity 0.3s;
+}
+
+.menu-mobile__item--has-children > .menu-mobile__submenu--open {
+  display: block;
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+.menu-mobile__link,
+.menu-mobile__subitem {
+  color: var(--govcolor-grey);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-mobile__sublink {
+  color: var(--govcolor-grey);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.menu-mobile__item--active-trail > .menu-mobile__link {
+  background-color: var(--govcolor-tulip);
+  color: var(--govcolor-white);
+}
+
+.menu-mobile__arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.menu-mobile__link--expanded .menu-mobile__arrow {
+  transform: rotate(180deg);
+}
+
+.menu-mobile__submenu--open ~ .menu-mobile__link .menu-mobile__arrow {
+  transform: rotate(180deg);
+}
+
+/* Estilos para el menú de escritorio */
+.desktop {
+  opacity: 1;
+  transition:
+    display 0.3s allow-discrete,
+    opacity 0.3s;
+  @starting-style {
+    opacity: 0;
+  }
+}
+
+.menu-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.menu-expanded .menu-arrow {
+  transform: rotate(180deg);
+}
+
+/*Estilos para pestañas*/
+
+.task-default {
+  background-color: #f6f8f9;
+  width: 13.375rem;
+  height: 4rem;
+}
+
+.task-default:hover {
+  background-color: #004884;
+  width: 13.375rem;
+  height: 4rem;
+}
+
+.task-default-link {
+  white-space: normal;
+  color: #004884;
+  width: 13.375rem;
+  height: 4rem;
+  font-size: 1rem;
+  text-align: center;
+  line-height: normal !important;
+  font-family: Montserrat-Medium !important;
+  border: 2px solid #e6effd;
+  padding-top: 1.375rem;
+  padding-bottom: 1.438rem;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  opacity: 1;
+  display: block;
+}
+
+.task-default-link:hover {
+  white-space: normal;
+  color: #ffff;
+  width: 13.375rem;
+  height: 4rem;
+  font-size: 1rem;
+  text-align: center;
+  line-height: normal !important;
+  font-family: Montserrat-Medium !important;
+  border: 2px solid #004884;
+  padding-top: 1.375rem;
+  padding-bottom: 1.438rem;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  opacity: 1;
+}
+
+/**
+Estilos para elementos de formulario tipo checkbox y radio
+**/
+/* Solo el pseudo-elemento que Tailwind no puede manejar */
+input[type="checkbox"].switch::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--color-cobalt-500);
+  top: 2px;
+  left: 1px;
+  transition: transform 0.3s;
+}
+
+input[type="checkbox"].switch:checked::before {
+  transform: translateX(22px);
+  background-color: #fff;
+}
+
+/* Estilos para tablas con tabledrag */
+table th,
+table td {
+  @apply px-4 py-3 text-sm align-middle;
+}
+
+table thead th {
+  @apply font-semibold text-gray-800 bg-gray-100 border-b-2 border-gray-400 text-left;
+}
+
+table tbody td {
+  @apply text-gray-700 border-b border-gray-200;
+}
+
+/* Filas alternas */
+table tbody tr.odd {
+  @apply bg-white;
+}
+
+table tbody tr.even {
+  @apply bg-gray-50;
+}
+
+/* Hover en filas */
+table tbody tr:not(.drag):hover {
+  @apply bg-blue-50 transition-colors duration-150;
+}
+
+/* Estado draggable */
+table tbody tr.draggable {
+  cursor: move;
+}
+
+table tbody tr.draggable:hover {
+  @apply shadow-sm;
+}
+
+/* Handle de arrastre */
+table .tabledrag-handle {
+  @apply cursor-move opacity-60 hover:opacity-100 transition-all duration-200;
+  padding-right: 0.5rem;
+}
+
+table .tabledrag-handle:hover {
+  @apply scale-110;
+}
+
+table .tabledrag-handle:hover .tabledrag-handle-icon {
+  @apply scale-125;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+table .tabledrag-handle .tabledrag-handle-icon {
+  @apply transition-all duration-200;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Fila siendo arrastrada */
+table tbody tr.drag {
+  @apply bg-gradient-to-r from-blue-100 to-blue-200 opacity-90 border-l-4 border-r-4 border-blue-600;
+  cursor: grabbing !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: scale(1.02);
+}
+
+table tbody tr.drag td {
+  @apply border-b-0 font-medium;
+}
+
+/* Indicador de posición de soltar - MÁS VISIBLE */
+table tbody tr.drag-previous {
+  position: relative;
+}
+
+table tbody tr.drag-previous td {
+  @apply border-b-4 border-blue-600;
+  background: linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.1) 100%);
+}
+
+table tbody tr.drag-previous::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #3b82f6 10%, 
+    #3b82f6 90%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+  animation: pulse-line 1s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+  0%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scaleY(1.2);
+  }
+}
+
+/* Input de peso cuando está visible */
+table .tabledrag-weight {
+  @apply w-20 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+/* Indentación para elementos anidados */
+table .tabledrag-indentation {
+  @apply inline-block;
+  width: 1.5rem;
+}
+
+/* Botones de toggle */
+table .tabledrag-toggle-weight-wrapper {
+  @apply text-sm;
+}
+
+table .tabledrag-toggle-weight {
+  @apply text-blue-600 hover:text-blue-800 hover:underline cursor-pointer;
+}
+
+/* Footer */
+table tfoot th,
+table tfoot td {
+  @apply font-semibold text-gray-800 bg-gray-100 border-t-2 border-gray-400;
+}
+
+/* Mejorar apariencia del select en celdas */
+table td select {
+  @apply border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500;
+}
+
+/* Mejorar apariencia de inputs en celdas */
+table td input[type="text"],
+table td input[type="number"] {
+  @apply border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500;
+}
+
+a.tabledrag-handle .handle {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.tabledrag-toggle-weight{
+  text-decoration: underline !important;
+  color: #004884;
+  cursor: pointer;
+}
+

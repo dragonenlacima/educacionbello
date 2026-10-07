@@ -1,0 +1,20 @@
+<section class="min-h-screen flex items-center justify-center p-4">
+	<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+		{% if logo %}
+			<div class="flex justify-center mb-8">
+				<a href="{{ path('<front>') }}" title="{{ site_name }}">
+					<img src="{{ logo }}" alt="{{ site_name }}" class="h-20 w-auto object-contain"/>
+				</a>
+			</div>
+		{% endif %}
+		{% if maintenance_mode %}
+			<div class="border border-gray-200 text-center p-4 rounded-full mb-4 text-red-500">Modo mantenimiento activado</div>
+		{% endif %}
+		{% if page.messages %}
+			{{ page.messages }}
+		{% endif %}
+		{% if page.content %}
+			{{ page.content }}
+		{% endif %}
+	</div>
+</section>

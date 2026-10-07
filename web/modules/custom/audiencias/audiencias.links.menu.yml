@@ -1,0 +1,52 @@
+# Enlaces de menú del módulo Audiencias.
+# Sección de primer nivel en el menú de administración (Toolbar) con cuatro
+# hijos que apuntan a cada listado.
+
+audiencias.admin:
+  title: 'Audiencias'
+  description: 'Gestión de vacantes administrativas del municipio de Bello.'
+  route_name: audiencias.admin_overview
+  parent: system.admin
+  menu_name: admin
+  weight: 0
+
+audiencias.institucion.list:
+  title: 'Instituciones'
+  route_name: audiencias.institucion.list
+  parent: audiencias.admin
+  weight: 0
+
+audiencias.cargo.list:
+  title: 'Cargos'
+  route_name: audiencias.cargo.list
+  parent: audiencias.admin
+  weight: 1
+
+audiencias.funcionario.list:
+  title: 'Funcionarios'
+  route_name: audiencias.funcionario.list
+  parent: audiencias.admin
+  weight: 2
+
+audiencias.vacante.list:
+  title: 'Vacantes'
+  route_name: audiencias.vacante.list
+  parent: audiencias.admin
+  weight: 3
+
+# Pantallas de asignación por cargo (tablero de estado + herramienta).
+audiencias.asignacion.secretarios:
+  title: 'Asignación – Secretarios'
+  route_name: audiencias.asignacion
+  route_parameters:
+    cargo_id: 1
+  parent: audiencias.admin
+  weight: 4
+
+audiencias.asignacion.auxiliares:
+  title: 'Asignación – Auxiliares Administrativos'
+  route_name: audiencias.asignacion
+  route_parameters:
+    cargo_id: 2
+  parent: audiencias.admin
+  weight: 5

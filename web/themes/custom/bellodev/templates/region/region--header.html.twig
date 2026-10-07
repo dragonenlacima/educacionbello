@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region <div>.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @see \Drupal\Core\Theme\ThemePreprocess::preprocessRegion()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content %}
+  <div{{ attributes.addClass('container','mx-auto','flex', 'flex-col', 'justify-center', 'items-center', 'py-4', 'md:justify-between', 'md:items-center', 'lg:flex-row', 'md:px-4','lg:px-4', 'xl:px-4') }}>
+    {{ content }}
+  </div>
+{% endif %}
