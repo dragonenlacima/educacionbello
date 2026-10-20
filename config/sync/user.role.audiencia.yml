@@ -1,0 +1,16 @@
+uuid: 7f54b932-404e-4ed9-bdae-0aebf2a9e052
+langcode: es
+status: true
+dependencies:
+  module:
+    - audiencias
+    - system
+    - toolbar
+id: audiencia
+label: Audiencia
+weight: 7
+is_admin: false
+permissions:
+  - 'access toolbar'
+  - 'administrar vacantes'
+  - 'view the administration theme'

@@ -1,0 +1,13 @@
+uuid: bf28eee5-7ad4-4dac-a896-efac94d48ea0
+langcode: es
+status: true
+dependencies:
+  module:
+    - create_public_official
+id: descargar_asistencia
+label: 'Descargar Asistencia'
+weight: 6
+is_admin: false
+permissions:
+  - 'Descargar asistencia'
+  - 'Ver lista de asistentes'

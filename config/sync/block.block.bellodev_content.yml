@@ -1,0 +1,22 @@
+uuid: d5db4581-f0ee-4f21-a65a-610dda538cb5
+langcode: es
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bellodev
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: bellodev_content
+theme: bellodev
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Contenido principal de la página'
+  label_display: '0'
+  provider: system
+visibility: {  }

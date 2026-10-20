@@ -1,0 +1,12 @@
+uuid: 34f7cdac-983b-458e-9dbe-d36d1e47cf8b
+langcode: es
+status: true
+dependencies:
+  module:
+    - create_public_official
+id: registrar_asistencia
+label: 'Registrar Asistencia'
+weight: 4
+is_admin: false
+permissions:
+  - 'Validar Funcionario'

@@ -1,0 +1,14 @@
+uuid: 02faf995-2618-4042-b3b1-9f1bdc8855bb
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.descargar_asistencia
+  module:
+    - user
+id: user_add_role_action.descargar_asistencia
+label: 'Añade el rol Descargar Asistencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: descargar_asistencia

@@ -1,0 +1,14 @@
+uuid: dad6f9aa-21d9-4560-8556-8319b36765ff
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.crear_usuario
+  module:
+    - user
+id: user_add_role_action.crear_usuario
+label: 'Añade el rol Crear usuario al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: crear_usuario

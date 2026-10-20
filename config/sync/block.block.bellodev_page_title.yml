@@ -1,0 +1,20 @@
+uuid: e9212b2f-76db-4a1b-b350-11a096e97c95
+langcode: es
+status: true
+dependencies:
+  theme:
+    - bellodev
+_core:
+  default_config_hash: 6aOgWsNTXjqrDm98TXSAjP6qd2nCijD1xw45MrnbK-Y
+id: bellodev_page_title
+theme: bellodev
+region: content
+weight: -2
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Título de la página'
+  label_display: '0'
+  provider: core
+visibility: {  }

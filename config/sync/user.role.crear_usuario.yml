@@ -1,0 +1,18 @@
+uuid: 668082a3-2dac-41d8-950c-03c9023fcf76
+langcode: es
+status: true
+dependencies:
+  module:
+    - role_delegation
+    - system
+    - toolbar
+id: crear_usuario
+label: 'Crear usuario'
+weight: 5
+is_admin: false
+permissions:
+  - 'access toolbar'
+  - 'administer users'
+  - 'assign descargar_asistencia role'
+  - 'assign registrar_asistencia role'
+  - 'view the administration theme'

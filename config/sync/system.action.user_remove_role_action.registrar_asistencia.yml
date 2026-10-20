@@ -1,0 +1,14 @@
+uuid: 16109a61-fbe2-4b3b-8dc4-e0ec36096437
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.registrar_asistencia
+  module:
+    - user
+id: user_remove_role_action.registrar_asistencia
+label: 'Elimina el rol Registrar Asistencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: registrar_asistencia

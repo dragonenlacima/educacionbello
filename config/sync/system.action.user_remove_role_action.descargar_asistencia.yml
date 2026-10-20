@@ -1,0 +1,14 @@
+uuid: c18e9a00-7350-48a0-8f01-4d95db04a626
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.descargar_asistencia
+  module:
+    - user
+id: user_remove_role_action.descargar_asistencia
+label: 'Elimina el rol Descargar Asistencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: descargar_asistencia

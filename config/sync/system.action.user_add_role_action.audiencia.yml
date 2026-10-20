@@ -1,0 +1,14 @@
+uuid: 7914775c-5595-498c-be33-006be068903c
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.audiencia
+  module:
+    - user
+id: user_add_role_action.audiencia
+label: 'Añade el rol Audiencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: audiencia

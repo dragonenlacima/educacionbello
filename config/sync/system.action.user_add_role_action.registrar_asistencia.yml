@@ -1,0 +1,14 @@
+uuid: d05f496b-e83b-403f-b8fa-eb5d481224dd
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.registrar_asistencia
+  module:
+    - user
+id: user_add_role_action.registrar_asistencia
+label: 'Añade el rol Registrar Asistencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: registrar_asistencia

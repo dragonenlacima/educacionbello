@@ -1,0 +1,14 @@
+uuid: 3687cbc6-cc97-4fc0-a1df-36632ce9a1d4
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.audiencia
+  module:
+    - user
+id: user_remove_role_action.audiencia
+label: 'Elimina el rol Audiencia al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: audiencia

@@ -1,0 +1,22 @@
+uuid: f9ad7ece-7fc4-4ba5-a47e-6274bdacce94
+langcode: es
+status: true
+dependencies:
+  theme:
+    - bellodev
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: bellodev_primary_local_tasks
+theme: bellodev
+region: content
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Solapas principales'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

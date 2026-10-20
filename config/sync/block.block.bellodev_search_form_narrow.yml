@@ -1,0 +1,23 @@
+uuid: e896e240-670f-4bc6-9fc9-2e6690204db7
+langcode: es
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - bellodev
+_core:
+  default_config_hash: _nZjxxdypO6xrOAJkCYD81v0L7wh2zbCAVO7_C-UKIc
+id: bellodev_search_form_narrow
+theme: bellodev
+region: header
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Formulario de búsqueda (estrecho)'
+  label_display: '0'
+  provider: search
+  page_id: null
+visibility: {  }

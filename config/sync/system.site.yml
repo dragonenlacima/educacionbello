@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: ijfbzDTN4CbE7Sr-6ubWzy_t1vH4OtU1doNCLssVz-4
+langcode: es
+uuid: e12ffa86-edff-4231-92f5-dd4085488cd4
+name: 'Secretaría de Educación'
+mail: john.rodriguez@bello.gov.co
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /user
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: es
+mail_notification: null

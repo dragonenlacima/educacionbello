@@ -1,0 +1,14 @@
+uuid: fddc9e87-7486-4472-99db-eb17b98975ff
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.crear_usuario
+  module:
+    - user
+id: user_remove_role_action.crear_usuario
+label: 'Elimina el rol Crear usuario al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: crear_usuario
