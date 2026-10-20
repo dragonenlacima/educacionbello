@@ -29,3 +29,4 @@ node_modules/
 *Zone.Identifier
 .DS_Store
 Thumbs.db
+/config/sync/.htaccess
